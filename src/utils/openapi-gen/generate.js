@@ -1,7 +1,9 @@
 // src/utils/openapi-gen/generate.js
 import fs from 'fs/promises';
 import path from 'path';
+
 import yaml from 'js-yaml';
+
 
 const ETH_METHODS = [
   {
@@ -100,7 +102,7 @@ async function generate() {
     ...eth,
   };
   await fs.writeFile('./public/openapi/evm-openapi.json', JSON.stringify(fullJson, null, 2));
-  console.log('✅ OpenAPI files generated');
+  console.info('✅ OpenAPI files generated');
 }
 
 generate().catch(console.error);

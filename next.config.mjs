@@ -1,29 +1,24 @@
 // next.config.mjs
 import nextra from 'nextra'
 
+// Nextra v4 configuration
 const withNextra = nextra({
+  // These options are confirmed to work with Nextra v4
   mdxOptions: {
     remarkPlugins: [],
     rehypePlugins: [],
   },
   latex: false,
-  contentDirPath: 'content',
+  defaultShowCopyCode: true,
+  search: {
+    codeblocks: true
+  },
 })
 
 export default withNextra({
   // Next.js config options
   reactStrictMode: true,
   serverExternalPackages: ['shiki'],
-  
-  nextra: {
-    theme: 'nextra-theme-docs',
-    themeConfig: './theme.config.tsx',
-    defaultShowCopyCode: true,
-    search: {
-      codeblocks: true
-    },
-    defaultLocale: 'en'
-  },
   
   // Configure Turbopack to resolve the mdx-components alias
   turbopack: {
@@ -38,28 +33,63 @@ export default withNextra({
   // Image optimization configuration
   images: {
     domains: ['cosmos.network'],
-  },
-  
-  // Optional: If you're using the App Router
-  experimental: {
-    // Any experimental features you want to enable
+    formats: ['image/avif', 'image/webp'],
   },
   
   // Configure compiler options
   compiler: {
     // Remove console.logs in production
     removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn']
+      exclude: ['error', 'warn', 'info']
     } : false,
   },
   
-  // Enable Node.js polyfills for packages that depend on them
-  webpack: (config) => {
+  // Enhanced webpack configuration with Go file handling
+  webpack: (config, { _isServer }) => {
+    // Handle binary and non-web file types
+    config.module.rules.push({
+      test: /\.(go|mod|sum|proto|java|rs|py|c|cpp|h|hpp|zip|pdf|doc|docx|xls|xlsx)$/,
+      use: 'ignore-loader',
+    });
+    
+    // Node.js polyfills
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
-      path: false
-    }
-    return config
-  }
+      path: false,
+    };
+    
+    return config;
+  },
+  
+  poweredByHeader: false,
+  
+  // Security headers
+  headers: async () => {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+        ],
+      },
+      {
+        // Cache static assets
+        source: '/(.*).(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
 })

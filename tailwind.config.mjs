@@ -1,5 +1,8 @@
+// tailwind.config.mjs
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const tailwindConfig = {
   content: [
     './app/**/*.{js,jsx,ts,tsx,md,mdx}',
     './content/**/*.{js,jsx,ts,tsx,md,mdx}',
@@ -11,20 +14,34 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Standard orange palette
+        orange: {
+          50: '#FFF7ED',
+          100: '#FFEDD5',
+          200: '#FED7AA',
+          300: '#FDBA74',
+          400: '#FB923C',
+          500: '#F97316',
+          600: '#EA580C',
+          700: '#C2410C',
+          800: '#9A3412',
+          900: '#7C2D12',
+          950: '#431407',
+        },
         // Cosmos-specific color palette
         cosmos: {
           orange: {
-            50: '#FFF6ED',
-            100: '#FFEBD5',
-            200: '#FFD4AB',
-            300: '#FFB675',
-            400: '#FF913C',
-            500: '#FA5F15', // Primary orange
-            600: '#E44109',
-            700: '#BD2F0C',
-            800: '#982611',
-            900: '#7D2211',
-            950: '#460F07',
+            50: '#FFF7ED',
+            100: '#FFEDD5',
+            200: '#FED7AA',
+            300: '#FDBA74',
+            400: '#FB923C',
+            500: '#F97316',
+            600: '#EA580C',
+            700: '#C2410C',
+            800: '#9A3412',
+            900: '#7C2D12',
+            950: '#431407',
           },
           amber: {
             50: '#FFFBEB',
@@ -135,6 +152,8 @@ module.exports = {
     },
   },
   plugins: [
-    import('@tailwindcss/typography').default,
+    typography,
   ],
-}
+};
+
+export default tailwindConfig;

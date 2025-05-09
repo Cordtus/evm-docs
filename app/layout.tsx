@@ -1,7 +1,8 @@
-import { Layout } from 'nextra-theme-docs'
-import { getPageMap } from 'nextra/page-map'
-import './globals.css'
+// In app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
+import './globals.css';
+import { getPageMap } from 'nextra/page-map';
+import { Layout } from 'nextra-theme-docs';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

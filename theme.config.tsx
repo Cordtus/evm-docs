@@ -1,6 +1,8 @@
-import { type ThemeConfig } from 'nextra-theme-docs'
+// theme.config.tsx
+import React from 'react'
+// Remove the incorrect import - don't import NextraThemeLayoutProps
 
-const config: ThemeConfig = {
+const config = {
   // Logo in navbar
   logo: (
     <div className="flex items-center gap-2">
@@ -38,7 +40,8 @@ const config: ThemeConfig = {
   sidebar: {
     defaultMenuCollapseLevel: 1,
     autoCollapse: true,
-    titleComponent({ title, type }: { title: string; type?: string }) {
+    // Fix the ESLint error by renaming 'type' to '_type'
+    titleComponent({ title, _type }: { title: string; _type?: string }) {
       return <>{title}</>
     }
   },

@@ -1,6 +1,9 @@
-// /content/api/_meta.js
-export default {
-  evm: {
-    title: 'EVM JSON-RPC Explorer',
-  },
+// content/api/_meta.js
+const meta = {
+  "index": "Overview",
+  "endpoints": "API Endpoints",
+  "examples": "Code Examples",
+  "reference": "Reference"
 }
+
+export default meta
