@@ -1,0 +1,33 @@
+---
+layout: default
+---
+
+# EVM JSON-RPC API Explorer
+
+This page documents and allows live interaction with the EVM-compatible JSON-RPC interface of this chain.
+
+## eth_getTransactionByHash
+
+<EvmRpcExplorer
+  method="eth_getTransactionByHash"
+  rpcUrl="https://rpc.sei.basementnodes.ca"
+  exampleRequest={{
+    jsonrpc: "2.0",
+    method: "eth_getTransactionByHash",
+    params: ["0x0000000000000000000000000000000000000000000000000000000000000000"],
+    id: 1
+  }}
+/>
+
+## eth_blockNumber
+
+<EvmRpcExplorer
+  method="eth_blockNumber"
+  rpcUrl="https://rpc.sei.basementnodes.ca"
+  exampleRequest={{
+    jsonrpc: "2.0",
+    method: "eth_blockNumber",
+    params: [],
+    id: 2
+  }}
+/>
