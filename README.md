@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cosmos EVM Documentation
 
-## Getting Started
+Documentation portal for Cosmos EVM built with Next.js 15 and Nextra v4.
 
-First, run the development server:
+## Technical Setup
+
+- **Framework**: Next.js 15.3.x with App Router
+- **Documentation Engine**: Nextra v4
+- **Styling**: Tailwind CSS v4
+- **Node Version**: 18.x or later recommended
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
+# Install dependencies
+yarn install
+
+# Run development server
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+yarn build
+
+# Lint the codebase
+yarn lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+├── app/                      # Next.js App Router files
+│   └── [[...mdxPath]]/page.jsx  # MDX page renderer
+├── content/                  # Documentation content (MDX files)
+├── public/                   # Static assets
+├── src/
+│   ├── components/           # React components
+│   └── utils/                # Utility functions
+├── mdx-components.tsx        # MDX component customizations
+├── next.config.mjs           # Next.js configuration
+├── tailwind.config.mjs       # Tailwind CSS configuration
+└── theme.config.tsx          # Nextra theme configuration
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding Content
 
-## Learn More
+1. **Add new pages** by creating `.mdx` files in the `content/` directory
+2. **Organize navigation** by updating the `_meta.js` files
+3. **Use components** by importing them directly in your MDX files
 
-To learn more about Next.js, take a look at the following resources:
+Example page:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```mdx
+---
+title: Introduction to Cosmos EVM
+description: Overview of Ethereum Virtual Machine on Cosmos
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Introduction
 
-## Deploy on Vercel
+This is a simple MDX page with **markdown** formatting.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<ChainInfo chain="cosmos-evm" />
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Development Notes
+
+- Run `yarn lint` before committing to ensure code quality
+- The project includes custom components in `src/components/` that can be used in MDX
+- Configuration for Nextra is in `theme.config.tsx`
+- Binary files (`.go`, `.zip`, etc.) in the content directory are ignored by webpack
+
+## Deployment
+
+The site is built as a static export and can be deployed to any static hosting provider.
+
+```bash
+yarn build
+```
