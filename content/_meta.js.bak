@@ -4,6 +4,14 @@ const meta = {
     type: 'separator',
     title: 'Primary Sections',
   },
+  index: {
+    title: 'Home',
+    type: 'page',
+  },
+  api: {
+    title: 'API Reference',
+    type: 'page',
+  },
   develop: {
     title: 'Develop Guide',
     type: 'page',

@@ -1,6 +1,8 @@
 ---
 title: Extracting Cosmos Transaction Data
-description: A practical demonstration of fetching and extracting specific data from Cosmos blockchain transactions
+description: Learn how to fetch and extract specific information from Cosmos blockchain transactions using REST API endpoints.
+data: {}
+endpoints: []
 ---
 
 import ChainInfo from '../../src/components/ChainInfo'
@@ -17,6 +19,7 @@ This tutorial demonstrates how to fetch and extract specific information from Co
 Here's the complete script we'll use to fetch transactions:
 
 <CodeCollapse language="javascript">
+
 ```javascript
 import fetch from 'node-fetch';
 import { setTimeout } from 'timers/promises';
@@ -86,6 +89,7 @@ async function main() {
 
 main().catch(error => console.error('Main Error:', error));
 ```
+
 </CodeCollapse>
 
 ## Key API Discovery
@@ -100,6 +104,7 @@ The critical insight was discovering that the Cosmos Hub API requires:
 When we ran this script with address `cosmos1wev8ptzj27aueu04wgvvl4gvurax6rj5f0v7rw`, here's what we found:
 
 <CodeCollapse language="json">
+
 ```json
 {
   "address": "cosmos1wev8ptzj27aueu04wgvvl4gvurax6rj5f0v7rw",
@@ -150,6 +155,7 @@ When we ran this script with address `cosmos1wev8ptzj27aueu04wgvvl4gvurax6rj5f0v
   }
 }
 ```
+
 </CodeCollapse>
 
 ## Extracting Specific Data
@@ -157,6 +163,7 @@ When we ran this script with address `cosmos1wev8ptzj27aueu04wgvvl4gvurax6rj5f0v
 Now let's create helper functions to extract specific information from the transaction data:
 
 <CodeCollapse language="javascript">
+
 ```javascript
 // Extract transfer amount in ATOM (convert from uatom)
 function getTransferAmount(transaction) {
@@ -209,6 +216,7 @@ console.log('Fee:', getTransactionFee(transaction));
 console.log('Addresses:', getAddresses(transaction));
 console.log('Gas Info:', getGasInfo(transaction));
 ```
+
 </CodeCollapse>
 
 ## Real Transaction Analysis
@@ -239,6 +247,7 @@ This transaction extraction pattern can be used for:
 You can modify the query to search for different criteria:
 
 <CodeCollapse language="javascript">
+
 ```javascript
 // Query variations
 const queries = [
@@ -258,6 +267,7 @@ const queries = [
     `message.sender='${address}' AND tx.height>0 AND tx.code!=0`
 ];
 ```
+
 </CodeCollapse>
 
 ## Next Steps

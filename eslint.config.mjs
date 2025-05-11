@@ -18,8 +18,8 @@ const eslintConfig = [
   // Add custom rule configurations
   {
     rules: {
-      // TypeScript-specific rules
-      "@typescript-eslint/no-explicit-any": "warn",
+      // TypeScript rules
+      "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
       "@typescript-eslint/ban-ts-comment": ["warn", { "ts-ignore": "allow-with-description" }],
       "@typescript-eslint/no-non-null-assertion": "warn",

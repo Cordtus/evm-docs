@@ -1,8 +1,4 @@
 // content/protocol/_meta.js
-const meta = {
-  "index": "Overview",
-  "architecture": "Architecture",
-  "consensus": "Consensus Mechanism"
-}
+const meta = {};
 
-export default meta
+export default meta;

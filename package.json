@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node build-wrapper.mjs",
+    "build:direct": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -26,6 +27,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "ignore-loader": "^0.1.2",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx-frontmatter": "^5.1.0",
     "tailwindcss": "^4.1.6",
     "typescript": "^5"
   }

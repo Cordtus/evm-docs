@@ -10,12 +10,34 @@ const tailwindConfig = {
     './mdx-components.tsx',
     './theme.config.tsx',
   ],
-  safelist: ['text-orange-600'],
+  safelist: [
+    'text-orange-50',
+    'text-orange-100',
+    'text-orange-200',
+    'text-orange-300',
+    'text-orange-400',
+    'text-orange-500',
+    'text-orange-600',
+    'text-orange-700',
+    'text-orange-800',
+    'text-orange-900',
+    'bg-orange-50',
+    'bg-orange-100',
+    'bg-orange-200',
+    'bg-orange-300',
+    'bg-orange-400',
+    'bg-orange-500',
+    'bg-orange-600',
+    'bg-orange-700',
+    'bg-orange-800',
+    'bg-orange-900',
+    'border-orange-500',
+    'border-orange-600',
+  ],
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Standard orange palette
         orange: {
           50: '#FFF7ED',
           100: '#FFEDD5',

@@ -209,7 +209,7 @@ if (require.main === module) {
     // Write JSON file
     fs.writeFileSync(outputFile, JSON.stringify(rpcData, null, 2));
     
-    console.info('✅ Conversion complete!');
+    console.info('Conversion complete!');
     console.info(`Generated ${outputFile}`);
     
     // Print summary
@@ -226,7 +226,7 @@ if (require.main === module) {
     console.info(`- ${stats.totalTypes} types`);
     
   } catch (error) {
-    console.error('❌ Error during conversion:', error);
+    console.error('Error during conversion:', error);
     process.exit(1);
   }
 }
