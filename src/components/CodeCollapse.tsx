@@ -34,7 +34,7 @@ export default function CodeCollapse({
     (children as CodeComponentProps).props?.children && 
     typeof (children as CodeComponentProps).props?.children === 'string'
   ) {
-    codeContent = (children as CodeComponentProps).props?.children
+    codeContent = (children as CodeComponentProps).props?.children || ''
   }
   
   const lines = codeContent.split('\n')

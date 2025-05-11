@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.75.7",
     "next": "15.3.2",
     "nextra": "^4.2.17",
     "nextra-theme-docs": "^4.2.17",
@@ -17,15 +16,12 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
-    "file-loader": "^6.2.0",
     "ignore-loader": "^0.1.2",
     "tailwindcss": "^4.0.0",
     "typescript": "^5"

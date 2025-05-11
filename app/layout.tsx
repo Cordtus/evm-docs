@@ -1,38 +1,33 @@
-// In app/layout.tsx
-import { Geist, Geist_Mono } from "next/font/google";
-import './globals.css';
+// app/layout.tsx
+import React from 'react';
 import { getPageMap } from 'nextra/page-map';
 import { Layout } from 'nextra-theme-docs';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const pageMap = await getPageMap();
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: 'Cosmos EVM Docs',
-  description: 'Documentation for Cosmos EVM',
-}
-
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body>
         <Layout
-          pageMap={await getPageMap()}
+          pageMap={pageMap}
+          navbar={
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 flex items-center justify-center">
+                <span className="text-white font-bold">⚡</span>
+              </div>
+              <span className="font-bold text-xl">Cosmos EVM</span>
+            </div>
+          }
+          sidebar={{
+            defaultMenuCollapseLevel: 1,
+            autoCollapse: true
+          }}
         >
           {children}
         </Layout>
       </body>
     </html>
-  )
+  );
 }
