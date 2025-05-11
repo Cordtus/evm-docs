@@ -1,6 +1,6 @@
-// content/protocol/_meta.js
+// content/integrate/_meta.js
 const meta = {
 
-};
+}
 
-export default meta;
+export default meta

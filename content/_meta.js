@@ -1,21 +1,8 @@
 // content/_meta.js
 const meta = {
-  '-- Primary Sections': {
-    type: 'separator',
-    title: 'Primary Sections',
-  },
-  develop: {
-    title: 'Develop Guide',
-    type: 'page',
-  },
-  integrate: {
-    title: 'Integration Guide',
-    type: 'page',
-  },
-  protocol: {
-    title: 'Protocol Reference',
-    type: 'page',
-  },
-};
+  develop: 'Develop',
+  integrate: 'Integrate',
+  protocol: 'Protocol'
+}
 
-export default meta;
+export default meta

@@ -1,4 +1,6 @@
 // content/protocol/_meta.js
-const meta = {};
+const meta = {
 
-export default meta;
+}
+
+export default meta
