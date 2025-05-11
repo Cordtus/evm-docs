@@ -10,6 +10,7 @@ const tailwindConfig = {
     './mdx-components.tsx',
     './theme.config.tsx',
   ],
+  safelist: ['text-orange-600'],
   darkMode: 'class',
   theme: {
     extend: {

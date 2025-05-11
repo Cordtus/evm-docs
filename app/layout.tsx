@@ -1,7 +1,7 @@
 // app/layout.tsx
-import React from 'react';
 import { getPageMap } from 'nextra/page-map';
 import { Layout } from 'nextra-theme-docs';
+import React from 'react';
 import './globals.css';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

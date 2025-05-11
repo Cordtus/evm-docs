@@ -1,0 +1,354 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { ChevronRightIcon, ChevronDownIcon } from 'lucide-react';
+
+interface RPCParameter {
+  name: string;
+  type: string;
+}
+
+interface RPCMethod {
+  name: string;
+  description: string;
+  parameters: RPCParameter[];
+  returns: string;
+  interface?: string;
+  receiver?: string;
+}
+
+interface RPCType {
+  name: string;
+  fields: {
+    name: string;
+    type: string;
+    tag: string;
+  }[];
+}
+
+interface RPCNamespace {
+  interfaces: RPCMethod[];
+  implementations: RPCMethod[];
+  types: Record<string, RPCType>;
+}
+
+interface RPCData {
+  namespaces: Record<string, RPCNamespace>;
+  types: Record<string, RPCType>;
+}
+
+interface RPCExplorerProps {
+  data?: RPCData;
+  endpoint?: string;
+}
+
+const RPCExplorer: React.FC<RPCExplorerProps> = ({ data, endpoint }) => {
+  const [rpcData, setRpcData] = useState<RPCData | null>(data || null);
+  const [loading, setLoading] = useState<boolean>(!data);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedNamespace, setSelectedNamespace] = useState<string>('');
+  const [selectedMethod, setSelectedMethod] = useState<RPCMethod | null>(null);
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [methodParams, setMethodParams] = useState<Record<string, string>>({});
+  const [showExample, setShowExample] = useState<boolean>(false);
+
+  // Load RPC data if not provided
+  useEffect(() => {
+    if (!data && endpoint) {
+      fetch(endpoint)
+        .then(res => res.json())
+        .then(setRpcData)
+        .catch(err => {
+          setError(err.message);
+          console.error('Failed to load RPC data:', err);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [data, endpoint]);
+
+  // Filter methods based on search query
+  const filterMethods = (methods: RPCMethod[], query: string) => {
+    if (!query) return methods;
+    return methods.filter(method => 
+      method.name.toLowerCase().includes(query.toLowerCase()) ||
+      method.description.toLowerCase().includes(query.toLowerCase())
+    );
+  };
+
+  // Toggle section expansion
+  const toggleSection = (sectionId: string) => {
+    const newExpanded = new Set(expandedSections);
+    if (newExpanded.has(sectionId)) {
+      newExpanded.delete(sectionId);
+    } else {
+      newExpanded.add(sectionId);
+    }
+    setExpandedSections(newExpanded);
+  };
+
+  // Handle method selection
+  const handleMethodSelect = (method: RPCMethod) => {
+    setSelectedMethod(method);
+    // Initialize parameters
+    const params: Record<string, string> = {};
+    method.parameters.forEach(param => {
+      params[param.name] = '';
+    });
+    setMethodParams(params);
+    setShowExample(false);
+  };
+
+  // Generate example request
+  const generateExample = (method: RPCMethod) => {
+    const exampleParams: Record<string, any> = {};
+    method.parameters.forEach(param => {
+      switch (param.type) {
+        case 'string': exampleParams[param.name] = 'example'; break;
+        case 'int32': 
+        case 'int64':
+        case 'uint32':
+        case 'uint64': exampleParams[param.name] = 0; break;
+        case 'bool': exampleParams[param.name] = false; break;
+        case 'common.Hash': exampleParams[param.name] = '0x1234567890abcdef'; break;
+        case 'common.Address': exampleParams[param.name] = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e'; break;
+        default: exampleParams[param.name] = methodParams[param.name] || '';
+      }
+    });
+    return exampleParams;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+        <p className="text-red-800 dark:text-red-300">Error loading RPC data: {error}</p>
+      </div>
+    );
+  }
+
+  if (!rpcData) {
+    return null;
+  }
+
+  const namespaces = Object.keys(rpcData.namespaces);
+  const currentNamespace = selectedNamespace || namespaces[0];
+  const namespace = rpcData.namespaces[currentNamespace];
+
+  if (!namespace) {
+    return <div>No RPC data available</div>;
+  }
+
+  const allMethods = [...namespace.interfaces, ...namespace.implementations];
+  const filteredMethods = filterMethods(allMethods, searchQuery);
+
+  return (
+    <div className="border border-orange-200 dark:border-orange-900/50 rounded-lg overflow-hidden bg-white dark:bg-gray-900">
+      <div className="border-b border-orange-200 dark:border-orange-900/50 p-4 bg-orange-50 dark:bg-orange-900/20">
+        <h2 className="text-xl font-bold text-orange-800 dark:text-orange-300">RPC Method Explorer</h2>
+        <p className="text-sm text-orange-600 dark:text-orange-400 mt-1">
+          Explore available RPC methods and their documentation
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 h-[600px]">
+        {/* Namespace and Method List */}
+        <div className="border-r border-orange-200 dark:border-orange-900/50 overflow-y-auto">
+          {/* Namespace Selector */}
+          <div className="p-4 border-b border-orange-200 dark:border-orange-900/50">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Namespace
+            </label>
+            <select
+              value={currentNamespace}
+              onChange={(e) => setSelectedNamespace(e.target.value)}
+              className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800"
+            >
+              {namespaces.map(ns => (
+                <option key={ns} value={ns}>{ns}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Search */}
+          <div className="p-4 border-b border-orange-200 dark:border-orange-900/50">
+            <input
+              type="text"
+              placeholder="Search methods..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-800 text-sm"
+            />
+          </div>
+
+          {/* Methods List */}
+          <div className="p-2">
+            {/* Interface Methods */}
+            {namespace.interfaces.length > 0 && (
+              <div className="mb-4">
+                <button
+                  onClick={() => toggleSection('interfaces')}
+                  className="flex items-center w-full p-2 text-sm font-medium text-left hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded"
+                >
+                  {expandedSections.has('interfaces') ? (
+                    <ChevronDownIcon className="w-4 h-4 mr-2" />
+                  ) : (
+                    <ChevronRightIcon className="w-4 h-4 mr-2" />
+                  )}
+                  Interface Methods ({namespace.interfaces.length})
+                </button>
+                {expandedSections.has('interfaces') && (
+                  <div className="ml-6 mt-1">
+                    {filterMethods(namespace.interfaces, searchQuery).map((method, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleMethodSelect(method)}
+                        className={`block w-full text-left p-2 text-sm rounded transition-colors ${
+                          selectedMethod === method
+                            ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300'
+                            : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                        }`}
+                      >
+                        {method.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Implementation Methods */}
+            {namespace.implementations.length > 0 && (
+              <div>
+                <button
+                  onClick={() => toggleSection('implementations')}
+                  className="flex items-center w-full p-2 text-sm font-medium text-left hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded"
+                >
+                  {expandedSections.has('implementations') ? (
+                    <ChevronDownIcon className="w-4 h-4 mr-2" />
+                  ) : (
+                    <ChevronRightIcon className="w-4 h-4 mr-2" />
+                  )}
+                  Implementation Methods ({namespace.implementations.length})
+                </button>
+                {expandedSections.has('implementations') && (
+                  <div className="ml-6 mt-1">
+                    {filterMethods(namespace.implementations, searchQuery).map((method, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleMethodSelect(method)}
+                        className={`block w-full text-left p-2 text-sm rounded transition-colors ${
+                          selectedMethod === method
+                            ? 'bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300'
+                            : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                        }`}
+                      >
+                        {method.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Method Details and Example */}
+        <div className="md:col-span-2 overflow-y-auto">
+          {selectedMethod ? (
+            <div className="p-6">
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  {selectedMethod.name}
+                </h3>
+                {selectedMethod.interface && (
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    From interface: <code className="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">{selectedMethod.interface}</code>
+                  </p>
+                )}
+                {selectedMethod.receiver && (
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    Receiver: <code className="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">{selectedMethod.receiver}</code>
+                  </p>
+                )}
+                <p className="text-gray-700 dark:text-gray-300">{selectedMethod.description}</p>
+              </div>
+
+              {/* Parameters */}
+              <div className="mb-6">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Parameters</h4>
+                {selectedMethod.parameters.length > 0 ? (
+                  <div className="space-y-3">
+                    {selectedMethod.parameters.map((param, idx) => (
+                      <div key={idx} className="border border-gray-200 dark:border-gray-700 rounded p-3">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-gray-900 dark:text-white">{param.name}</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400 font-mono bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">
+                            {param.type}
+                          </span>
+                        </div>
+                        <input
+                          type="text"
+                          value={methodParams[param.name] || ''}
+                          onChange={(e) => setMethodParams({...methodParams, [param.name]: e.target.value})}
+                          placeholder={`Enter ${param.type}...`}
+                          className="w-full px-3 py-1.5 border border-gray-300 dark:border-gray-700 rounded text-sm"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">No parameters required</p>
+                )}
+              </div>
+
+              {/* Returns */}
+              <div className="mb-6">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Returns</h4>
+                <code className="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded text-sm inline-block">
+                  {selectedMethod.returns}
+                </code>
+              </div>
+
+              {/* Example Request */}
+              <div>
+                <button
+                  onClick={() => setShowExample(!showExample)}
+                  className="mb-3 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+                >
+                  {showExample ? 'Hide Example' : 'Show Example Request'}
+                </button>
+                {showExample && (
+                  <div className="bg-gray-900 text-gray-100 p-4 rounded font-mono text-sm overflow-x-auto">
+                    <pre>
+{`// JSON-RPC request
+{
+  "jsonrpc": "2.0",
+  "method": "${currentNamespace}.${selectedMethod.name}",
+  "params": ${JSON.stringify(generateExample(selectedMethod), null, 2)},
+  "id": 1
+}`}
+                    </pre>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
+              Select a method to view details
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RPCExplorer;

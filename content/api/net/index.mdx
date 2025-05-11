@@ -1,0 +1,78 @@
+---
+title: Network Namespace (net_)
+description: Network-related JSON-RPC methods
+---
+
+# Network Namespace (net_)
+
+The `net_` namespace provides methods for checking network connectivity and peers.
+
+## Available Methods
+
+### net_version
+
+Returns the current network/chain ID.
+
+**Parameters:** None
+
+**Returns:** `STRING` - Network ID
+
+**Example:**
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_version","params":[],"id":1}' http://localhost:8545
+```
+
+**Response:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "1337"
+}
+```
+
+### net_listening
+
+Returns whether the client is actively listening for network connections.
+
+**Parameters:** None
+
+**Returns:** `BOOLEAN` - True if listening, false otherwise
+
+**Example:**
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_listening","params":[],"id":1}' http://localhost:8545
+```
+
+**Response:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": true
+}
+```
+
+### net_peerCount
+
+Returns the number of connected peers.
+
+**Parameters:** None
+
+**Returns:** `QUANTITY` - Number of connected peers
+
+**Example:**
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":1}' http://localhost:8545
+```
+
+**Response:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "0x5"
+}
+```
+
+---

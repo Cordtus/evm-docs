@@ -1,9 +1,10 @@
 // content/api/_meta.js
 const meta = {
-  "index": "Overview",
-  "endpoints": "API Endpoints",
-  "examples": "Code Examples",
-  "reference": "Reference"
+  evm: 'EVM API',
+  eth: 'Ethereum API',
+  net: 'Network API',
+  types: 'Types',
+  web3: 'Web3 API',
 }
 
 export default meta

@@ -1,0 +1,77 @@
+---
+title: Ethereum Namespace (eth_)
+description: Standard Ethereum JSON-RPC methods for blockchain interaction
+---
+
+# Ethereum Namespace (eth_)
+
+The `eth_` namespace contains standard Ethereum JSON-RPC methods for interacting with the blockchain.
+
+## Method Categories
+
+### Getting Blocks
+Retrieve information about blocks in the blockchain:
+
+- [`eth_blockNumber`](#eth_blockNumber) - Get current block number
+- [`eth_getBlockByNumber`](#eth_getBlockByNumber) - Get block by number
+- [`eth_getBlockByHash`](#eth_getBlockByHash) - Get block by hash
+
+### Reading Transactions
+Retrieve transaction information:
+
+- [`eth_getTransactionByHash`](#eth_getTransactionByHash) - Get transaction by hash
+- [`eth_getTransactionCount`](#eth_getTransactionCount) - Get nonce for address
+- [`eth_getTransactionReceipt`](#eth_getTransactionReceipt) - Get transaction receipt
+
+### Writing Transactions
+Send transactions to the network:
+
+- [`eth_sendRawTransaction`](#eth_sendRawTransaction) - Send signed transaction
+- [`eth_sendTransaction`](#eth_sendTransaction) - Send transaction (requires unlocked account)
+
+### Account Information
+Query account state and storage:
+
+- [`eth_getBalance`](#eth_getBalance) - Get account balance
+- [`eth_getCode`](#eth_getCode) - Get contract code
+- [`eth_getStorageAt`](#eth_getStorageAt) - Get storage value
+- [`eth_getProof`](#eth_getProof) - Get Merkle proof
+
+### Contract Execution
+Execute contract calls:
+
+- [`eth_call`](#eth_call) - Execute read-only contract call
+- [`eth_estimateGas`](#eth_estimateGas) - Estimate gas usage
+
+### Chain Information
+Get blockchain metadata:
+
+- [`eth_chainId`](#eth_chainId) - Get chain ID
+- [`eth_protocolVersion`](#eth_protocolVersion) - Get protocol version
+- [`eth_gasPrice`](#eth_gasPrice) - Get suggested gas price
+
+## Method Details
+
+### eth_blockNumber
+
+Returns the current block number.
+
+**Parameters:** None
+
+**Returns:** `QUANTITY` - Current block number
+
+**Example:**
+```bash
+curl -X POST --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' http://localhost:8545
+```
+
+**Response:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": "0x4b7"
+}
+```
+
+---
