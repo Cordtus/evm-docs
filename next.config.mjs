@@ -1,9 +1,10 @@
-// next.config.mjs
-import nextra from 'nextra'
+import nextra from 'nextra';
 
-const withNextra = nextra({})
+const withNextra = nextra({
+  staticImage: true,
+  defaultShowCopyCode: true
+});
 
 export default withNextra({
-  reactStrictMode: true,
-  images: { unoptimized: true },
-})
+  reactStrictMode: true
+});

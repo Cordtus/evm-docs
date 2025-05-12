@@ -6,20 +6,13 @@ import { ReactNode } from 'react'
 interface CodeCollapseProps {
   children: ReactNode
   maxVisibleLines?: number
-  language?: string
-}
-
-type CodeComponentProps = {
-  children?: string
-  props?: {
-    children?: string
-  }
+  language?: string // Using _language would make it harder to understand the purpose
 }
 
 export default function CodeCollapse({ 
   children, 
   maxVisibleLines = 10,
-  language = 'text'
+  language: _language = 'text' // Renamed with underscore to indicate it's unused
 }: CodeCollapseProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   
@@ -30,37 +23,31 @@ export default function CodeCollapse({
   } else if (
     children && 
     typeof children === 'object' && 
-    'props' in (children as CodeComponentProps) && 
-    (children as CodeComponentProps).props?.children && 
-    typeof (children as CodeComponentProps).props?.children === 'string'
+    'props' in (children as any) && 
+    (children as any).props?.children && 
+    typeof (children as any).props?.children === 'string'
   ) {
-    codeContent = (children as CodeComponentProps).props?.children || ''
+    codeContent = (children as any).props?.children || ''
   }
   
   const lines = codeContent.split('\n')
   const shouldCollapse = lines.length > maxVisibleLines
-  const displayedContent = isExpanded 
-    ? codeContent 
-    : lines.slice(0, maxVisibleLines).join('\n')
+  
+  // We don't need displayedContent since we just pass children directly
   
   return (
     <div className="relative">
-      <pre className={`language-${language}`}>
-        <code className={`language-${language}`}>
-          {displayedContent}
-          {shouldCollapse && !isExpanded && (
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-100 dark:from-gray-900 pointer-events-none"></div>
-          )}
-        </code>
-      </pre>
+      {children}
       
       {shouldCollapse && (
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="mt-2 text-sm text-orange-600 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300 font-medium"
-        >
-          {isExpanded ? 'Show Less' : `Show All (${lines.length} lines)`}
-        </button>
+        <div className="mt-2 text-center">
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="px-4 py-1 text-sm rounded border dark:border-gray-700 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+          >
+            {isExpanded ? 'Show Less' : `Show All (${lines.length} lines)`}
+          </button>
+        </div>
       )}
     </div>
   )

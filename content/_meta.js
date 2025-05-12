@@ -1,7 +1,8 @@
 // content/_meta.js
 const meta = {
-  develop: 'Develop',
-  integrate: 'Integrate',
+  index: 'Home',
+  develop: 'Developer Guide',
+  integrate: 'Integration',
   protocol: 'Protocol'
 }
 
