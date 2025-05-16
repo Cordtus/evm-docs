@@ -1,4 +1,4 @@
-// content/protocol/_meta.js
+// content/learn/_meta.js
 const index = {
   index: 'Overview'
 }

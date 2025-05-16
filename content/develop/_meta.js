@@ -1,6 +1,6 @@
 // content/develop/_meta.js
-const meta = {
-
+const index = {
+  index: 'Overview'
 }
 
-export default meta
+export default index

@@ -1,5 +1,8 @@
+// src/components/index.ts
 // Export all components for easy importing
-export { default as ChainInfo } from './ChainInfo';
+export { default as Card } from './Card';
+export { default as Header } from './Header';
+export { default as Section } from './Section';
+export { default as NetworkInfo } from './NetworkInfo';
 export { default as CodeCollapse } from './CodeCollapse';
-
-// Add future component exports here
+export { default as EVMRPCExplorer } from './EVMRPCExplorer';

@@ -1,4 +1,4 @@
-// src/components/evm/EvmRpcExplorer.tsx
+// src/components/evm/EvmRpcExplorer/index.tsx
 'use client'
 
 import { useState } from 'react'
@@ -25,15 +25,15 @@ interface RpcMethod {
 }
 
 // Define props with proper types
-interface EvmRpcExplorerProps {
+interface EVMRPCExplorerProps {
   endpoint?: string;
   defaultMethod?: string;
 }
 
-export default function EvmRpcExplorer({ 
+export default function EVMRPCExplorer({ 
   endpoint = "https://evm-rpc.cosmos.network", 
   defaultMethod = "eth_blockNumber" 
-}: EvmRpcExplorerProps) {
+}: EVMRPCExplorerProps) {
   const [method, setMethod] = useState(defaultMethod);
   const [params, setParams] = useState("[]");
   const [result, setResult] = useState<string>("");

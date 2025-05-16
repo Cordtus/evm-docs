@@ -1,10 +1,17 @@
-import nextra from 'nextra';
+// next.config.mjs
+import nextra from 'nextra'
 
 const withNextra = nextra({
+  defaultShowCopyCode: true,
   staticImage: true,
-  defaultShowCopyCode: true
-});
+  contentDirBasePath: '/content'
+})
 
 export default withNextra({
-  reactStrictMode: true
-});
+  images: { unoptimized: true },
+  turbopack: {
+    resolveAlias: {
+      'next-mdx-import-source-file': './mdx-components.tsx'
+    }
+  }
+})

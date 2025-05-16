@@ -1,25 +1,26 @@
+// src/components/CodeCollapse/index.tsx
 'use client'
 
 import { useState } from 'react'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 interface CodeCollapseProps {
-  children: ReactNode
-  maxVisibleLines?: number
-  language?: string // Using _language would make it harder to understand the purpose
+  children: ReactNode;
+  maxVisibleLines?: number;
+  language?: string; 
 }
 
 export default function CodeCollapse({ 
   children, 
   maxVisibleLines = 10,
-  language: _language = 'text' // Renamed with underscore to indicate it's unused
+  language = 'text' // Keep the actual prop name, and ignore it
 }: CodeCollapseProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
   
   // Extract code content from children
-  let codeContent = ''
+  let codeContent = '';
   if (typeof children === 'string') {
-    codeContent = children
+    codeContent = children;
   } else if (
     children && 
     typeof children === 'object' && 
@@ -27,13 +28,13 @@ export default function CodeCollapse({
     (children as any).props?.children && 
     typeof (children as any).props?.children === 'string'
   ) {
-    codeContent = (children as any).props?.children || ''
+    codeContent = (children as any).props?.children || '';
   }
   
-  const lines = codeContent.split('\n')
-  const shouldCollapse = lines.length > maxVisibleLines
-  
-  // We don't need displayedContent since we just pass children directly
+  const lines = codeContent.split('\n');
+  const shouldCollapse = lines.length > maxVisibleLines;
+   
+  const _ = language;
   
   return (
     <div className="relative">
@@ -50,5 +51,5 @@ export default function CodeCollapse({
         </div>
       )}
     </div>
-  )
+  );
 }

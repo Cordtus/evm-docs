@@ -1,29 +1,47 @@
+// content/index.mdx
 ---
-title: Cosmos EVM Documentation
-description: Official documentation for Cosmos Ethereum Virtual Machine (EVM)
+title: 'Cosmos EVM Documentation'
+description: 'Official documentation for the Cosmos Ethereum Virtual Machine'
 ---
 
-# Welcome to Cosmos EVM
+# Welcome to Cosmos EVM Documentation
 
-Seamlessly run Ethereum smart contracts on the Cosmos network, combining the best of both ecosystems.
+The Ethereum Virtual Machine on Cosmos - bringing fast, reliable, and scalable EVM compatibility to the Cosmos ecosystem.
 
-## What is Cosmos EVM?
+## Key Features
 
-Cosmos EVM is a Cosmos SDK module that enables full Ethereum Virtual Machine compatibility within the Cosmos ecosystem.
+- **Ethereum Compatibility**: Use existing Ethereum tools, libraries, and smart contracts
+- **High Performance**: Fast block times and high transaction throughput
+- **Low Fees**: Efficient consensus mechanism resulting in lower transaction costs
+- **Interoperability**: Connect with other chains in the Cosmos ecosystem via IBC
+- **Security**: Built on Cosmos SDK with proven security features
 
-Cosmos EVM combines the security and interoperability of the Cosmos SDK with the rich smart contract ecosystem of Ethereum. This integration allows developers to:
+## Getting Started
 
-- Deploy existing Ethereum smart contracts without modifications
-- Use standard Ethereum tools like Metamask, Hardhat, and Truffle
-- Benefit from Cosmos features like Interchain Accounts (ICA)
-- Achieve significantly higher throughput than Ethereum mainnet
+<Card 
+  title="Protocol"
+  description="Learn about the Cosmos EVM protocol architecture and design"
+  href="/protocol"
+  icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>}
+  variant="feature"
+/>
 
-## Chain Status
+<Card 
+  title="Developer Guide" 
+  description="Start building on Cosmos EVM"
+  href="/develop"
+  icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>}
+  variant="feature"
+/>
 
+<Card 
+  title="Integration Guide"
+  description="Integrate your services with Cosmos EVM"
+  href="/integrate"
+  icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>}
+  variant="feature"
+/>
 
-## Quick Links
+## Network Information
 
-- [Get Started](/develop/quickstart)
-- [Smart Contracts](/develop/smart-contracts)
-- [Protocol Overview](/protocol/overview)
-- [Integration Guide](/integrate/guide)
+<NetworkInfo />

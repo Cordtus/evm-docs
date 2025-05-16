@@ -1,97 +1,24 @@
-# Develop on Cosmos EVM
+---
+title: 'Developer Guide'
+description: 'Getting started with development on Cosmos EVM'
+---
 
-This section guides you through developing smart contracts and dApps on Cosmos EVM.
+# Developer Guide
+
+This section provides resources and guides for developers looking to build on Cosmos EVM.
 
 ## Development Environment
 
-Setting up your local environment for Cosmos EVM development.
+Setting up your development environment to work with Cosmos EVM.
 
-<Steps>
-### Install Dependencies
+## Smart Contracts
 
-First, ensure you have the following tools installed:
+Writing, testing, and deploying smart contracts on Cosmos EVM.
 
-```bash
-# Install Node.js and npm
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
+## dApp Development
 
-# Install Yarn
-npm install -g yarn
+Building decentralized applications that interact with Cosmos EVM.
 
-# Install Hardhat
-yarn global add hardhat
-```
+## Tutorials
 
-### Configure Hardhat for Cosmos EVM
-
-Create a new Hardhat project:
-
-```bash
-mkdir my-cosmos-project
-cd my-cosmos-project
-yarn init -y
-yarn add --dev hardhat @nomicfoundation/hardhat-toolbox
-npx hardhat init
-```
-
-Update your `hardhat.config.js` to include Cosmos EVM network:
-
-```js
-module.exports = {
-  solidity: "0.8.19",
-  networks: {
-    cosmos_evm: {
-      url: "https://evm-rpc.cosmos.network",
-      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 9000, // Replace with actual chain ID
-    },
-  },
-};
-```
-
-### Write Your First Contract
-
-Create a simple contract in `contracts/CosmosGreeter.sol`:
-
-<CodeCollapse language="solidity" maxVisibleLines={8}>
-```solidity
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-contract CosmosGreeter {
-    string private greeting;
-    
-    constructor(string memory _greeting) {
-        greeting = _greeting;
-    }
-    
-    function greet() public view returns (string memory) {
-        return greeting;
-    }
-    
-    function setGreeting(string memory _greeting) public {
-        greeting = _greeting;
-    }
-}
-```
-</CodeCollapse>
-
-### Deploy to Cosmos EVM
-
-Deploy your contract:
-
-```bash
-npx hardhat run scripts/deploy.js --network cosmos_evm
-```
-</Steps>
-
-## Network Status
-
-<ChainInfo chain="cosmoshub" />
-
-## Next Steps
-
-- Learn about [contract verification](/develop/verification)
-- Explore [frontend integration](/integrate/frontend)
-- Read about [gas optimization](/develop/optimization)
+Step-by-step guides for common development tasks.

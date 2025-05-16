@@ -1,31 +1,30 @@
 // mdx-components.tsx
-import { Cards, Callout, Steps, Tabs } from 'nextra/components'
-import { useMDXComponents as getDocsThemeComponents } from 'nextra-theme-docs'
+import { Steps, Tabs } from 'nextra/components';
+import { useMDXComponents as getThemeComponents } from 'nextra-theme-docs';
 
 // Import custom components
-import { ChainInfo, CodeCollapse } from './src/components'
+import { 
+  Card, 
+  Header,
+  Section, 
+  NetworkInfo,
+  CodeCollapse, 
+  EVMRPCExplorer
+} from './src/components';
 
-// Type for components parameter
-interface MDXComponentsObject {
-  [key: string]: React.ComponentType<any> | undefined;
-}
-
-export function useMDXComponents(components: MDXComponentsObject = {}) {
-  // Get default theme components
-  const themeComponents = getDocsThemeComponents()
-
+export function useMDXComponents(components = {}) {
   return {
-    ...themeComponents,
-    // Include Nextra components
-    Callout,
-    Cards,
-    Card: Cards.Card,
+    ...getThemeComponents(),
+    // Custom components
+    Card,
+    Header,
+    Section,
+    NetworkInfo,
+    CodeCollapse, 
+    EVMRPCExplorer,
+    // Nextra components
     Steps,
     Tabs,
-    // Add custom components
-    ChainInfo,
-    CodeCollapse,
-    // Merge any components passed from specific pages
-    ...components,
-  }
+    ...components
+  };
 }

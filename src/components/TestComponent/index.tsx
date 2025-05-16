@@ -1,3 +1,4 @@
+// src/components/TestComponent/index.tsx
 'use client'
 
 export default function TestComponent() {

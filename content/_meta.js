@@ -1,9 +1,9 @@
 // content/_meta.js
-const meta = {
+const index = {
   index: 'Home',
+  protocol: 'Protocol',
   develop: 'Developer Guide',
-  integrate: 'Integration',
-  protocol: 'Protocol'
+  integrate: 'Integration'
 }
 
-export default meta
+export default index
